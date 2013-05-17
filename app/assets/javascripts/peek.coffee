@@ -36,7 +36,7 @@ toggleBar = (event) ->
       document.cookie = "peek=false; path=/";
 
 fetchRequestResults = ->
-  $.ajax '/peek/results',
+  $.ajax '/services/internal/peek/results',
     data:
       request_id: getRequestId()
     success: (data, textStatus, xhr) ->
