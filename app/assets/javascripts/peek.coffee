@@ -10,6 +10,8 @@ updatePerformanceBar = (results) ->
   for key of results.data
     for label of results.data[key]
       $("[data-defer-to=#{key}-#{label}]").text results.data[key][label]
+      $("[data-defer-link-to=#{key}-#{label}]").attr 'data-navigate-to', results.data[key][label]
+
   $(document).trigger 'peek:render', [getRequestId(), results]
 
 initializeTipsy = ->
@@ -43,6 +45,12 @@ fetchRequestResults = ->
       updatePerformanceBar data
     error: (xhr, textStatus, error) ->
       # Swallow the error
+
+$(document).on 'click', '[data-navigate-to]', (e) ->
+  val = $(e.target).attr('data-navigate-to')
+  window.parent.postMessage({navigateTo: val}, "*")
+  e.preventDefault()
+  false
 
 $(document).on 'keypress', toggleBar
 
