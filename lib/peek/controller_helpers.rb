@@ -16,5 +16,10 @@ module Peek
     def peek_enabled?
       Peek.enabled?
     end
+
+    def append_info_to_payload(payload)
+      payload[:peek_enabled] = peek_enabled?
+      super
+    end
   end
 end
